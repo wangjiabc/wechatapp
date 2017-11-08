@@ -59,8 +59,8 @@
       {
         "iconPath": "/images/nav-icon-cat.png",
         "selectedIconPath": "/images/nav-icon-cat.active.png",
-        "pagePath": "pages/cat/cat",
-        "text": "分类"
+        "pagePath": "pages/list/list",
+        "text": "物业缴费"
       },
       {
         "iconPath": "/images/nav-icon-user.png",

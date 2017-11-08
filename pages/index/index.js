@@ -10,7 +10,7 @@ Page({
           {
             "id":0,
             "pic_url": "http://img14.yiguoimg.com/e/ad/2016/160914/585749449477366062_260x320.jpg",
-            "title":"物业缴费",
+            "title":"选择小区",
           },
           {
             "id":1,
@@ -48,29 +48,7 @@ Page({
             parent_id = scene;
         }
         app.loginBindParent({parent_id: parent_id});
-
-        wx.getStorage({
-             key: 'p0',
-             success: function(res) {
-               page.p0=res.data;
-               console.log(res.data)
-                wx.getStorage({
-                     key: 'c0',
-                     success: function(res) {
-                     page.c0=res.data;
-                     console.log(res.data)
-                     if(page.p0==null||page.c0==null){
-                         wx.navigateTo({
-                        url:"/pages/day/day"
-                         })
-                       }else{
-                         console.log("社区地址是:"+page.p0+"  "+page.c0);
-                      }
-                 } 
-              })
-            } 
-        })
-       
+     
     },
 
    bindPickerChange: function(e) {
@@ -103,6 +81,29 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
+     var page = this;
+      wx.getStorage({
+             key: 'p0',
+             success: function(res) {
+               page.p0=res.data;
+               console.log(res.data)
+                wx.getStorage({
+                     key: 'c0',
+                     success: function(res) {
+                     page.c0=res.data;
+                     console.log(res.data)
+                     console.log("社区地址是:"+page.p0+"  "+page.c0);
+                 } 
+              })
+            },
+            fail:function(res){
+                  wx.navigateTo({
+                        url:"/pages/day/day"
+                   })
+            } 
+        })
+
+
         share_count = 0;
         var store = wx.getStorageSync("store");
         if (store && store.name) {
@@ -238,7 +239,7 @@ Page({
          break; 
        case 3:
            wx.navigateTo({
-             url:"/pages/yiguo/list3/list3"
+             url:"/pages/day/day"
             })
          break;
        default:

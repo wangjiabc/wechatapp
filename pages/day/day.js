@@ -85,8 +85,8 @@ Page({
 	submitForm() {
 	  var p0=this.data.p0;
 	  var c0=this.data.c0;
-	  			 console.log("p="+p0);
-			  console.log("c="+c0);
+	  var address=this.data.address;
+	 wx.clearStorage();
 	  wx.setStorage({
 		  key : 'p0',
 		  data : p0
@@ -95,5 +95,18 @@ Page({
 		  key : 'c0',
 		  data : c0
 	  });
+      wx.setStorage({
+		  key:'address',
+		  data:address
+	  })
+
+	  wx.showToast({
+ 		 title: '设置成功',
+		})
+		setTimeout(function(){
+ 		 wx.hideLoading();
+		 wx.navigateBack();
+	  },2000)
+
     }
 });

@@ -18,7 +18,19 @@ Page({
     },
 
     onLoad: function (options) {
+    
+    function alertObj(obj){
+        	var output = "";
+	        for(var i in obj){  
+		    var property=obj[i];  
+		    output+=i+" = "+property+"\n"; 
+	        }  
+	         return obj
+         }
+
         this.loadData(options);
+        console.log("options="+alertObj(options));
+
     },
 
     /**
@@ -27,8 +39,21 @@ Page({
     loadData: function (options) {
         var page = this;
         var cat_list = wx.getStorageSync("cat_list");
+        var address=wx.getStorageSync("address");
+        wx.setNavigationBarTitle({
+                     title: address+"物业费"
+        })
         var height_bar = "";
-        if (options.cat_id) {
+       
+     
+        
+   wx.getStorage({
+       key: 'c0',
+       success: function(res) {
+         options.cat_id=res.data;
+         console.log("社区id是:"+options.cat_id);
+
+         if (options.cat_id) {
             for (var i in cat_list) {
                 var in_list = false;
                 if (cat_list[i].id == options.cat_id) {
@@ -46,15 +71,18 @@ Page({
                 }
                 if (in_list)
                     cat_list[i].checked = true;
-            }
-        }
-        page.setData({
-            cat_list: cat_list,
-            cat_id: options.cat_id || "",
-            height_bar: height_bar,
-        });
-        page.reloadGoodsList();
-
+                 }
+          }
+       
+             page.setData({
+                 cat_list: cat_list,
+                 cat_id: options.cat_id || "",
+                 height_bar: height_bar,
+                 });
+             page.reloadGoodsList();
+       }
+   });
+ 
     },
     catClick: function (e) {
         var page = this;
@@ -207,6 +235,74 @@ Page({
     },
 
     onShow: function (e) {
+
+        wx.getStorage({
+             key: 'p0',
+             success: function(res) {
+               page.p0=res.data;
+               console.log(res.data)
+                wx.getStorage({
+                     key: 'c0',
+                     success: function(res) {
+                     page.c0=res.data;
+                     console.log(res.data)
+                     console.log("社区地址是:"+page.p0+"  "+page.c0);
+                 } 
+              })
+            },
+            fail:function(res){
+                  wx.navigateTo({
+                        url:"/pages/day/day"
+                   })
+            } 
+         })
+
+         var page = this;
+        var cat_list = wx.getStorageSync("cat_list");
+        var address=wx.getStorageSync("address");
+        wx.setNavigationBarTitle({
+                     title: address+"物业费"
+        })
+        var height_bar = "";
+       
+     
+        
+   wx.getStorage({
+       key: 'c0',
+       success: function(res) {
+         var cat_id=res.data;
+         console.log("社区id是:"+cat_id);
+
+         if (cat_id) {
+            for (var i in cat_list) {
+                var in_list = false;
+                if (cat_list[i].id == cat_id) {
+                    cat_list[i].checked = true;
+                    if (cat_list[i].list.length > 0) {
+                        height_bar = "height-bar";
+                    }
+                }
+                for (var j in cat_list[i].list) {
+                    if (cat_list[i].list[j].id == cat_id) {
+                        cat_list[i].list[j].checked = true;
+                        in_list = true;
+                        height_bar = "height-bar";
+                    }
+                }
+                if (in_list)
+                    cat_list[i].checked = true;
+                 }
+          }
+       
+             page.setData({
+                 cat_list: cat_list,
+                 cat_id: cat_id || "",
+                 height_bar: height_bar,
+                 });
+             page.reloadGoodsList();
+       }
+   });
+
         var page = this;
         var list_page_reload = wx.getStorageSync("list_page_reload");
 
