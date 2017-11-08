@@ -1,0 +1,16 @@
+
+  <view class="show" wx:if="{{isShow}}">{{address}}</view>
+
+  <view class="button-sp-area" wx:if="{{isShow}}">
+    <button class="weui-btn" type="primary" bindtap="submitForm">确定</button>
+  </view>
+
+  <!--<view>{{year}}年{{month}}月{{day}}日</view>-->
+  <picker-view  indicator-style="height: 50px;" style="background-color:#dddddd;width: 100%; height: 300px;" value="{{value}}" bindchange="bindChange">
+    <picker-view-column>
+      <view wx:for="{{years}}" bindscroll="scrollProvince" style="line-height: 50px;font-size:15px;text-align: center;width: 120rpx;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin: 0 auto;">{{item}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{months}}" style="line-height: 50px;font-size:15px;text-align: center;">{{item}}</view>
+    </picker-view-column>
+  </picker-view>
